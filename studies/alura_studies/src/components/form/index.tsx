@@ -2,16 +2,31 @@ import React from 'react'
 import Button from '../buttons'
 import style from './Form.module.scss'
 import { ITask } from '../../types/ITask'
+import { v4 as uuidv4 } from 'uuid'
 
 class Form extends React.Component<{ setTask: React.Dispatch<React.SetStateAction<Array<ITask>>> }>
 {
     state = {
         name: "",
-        duration: ""
+        duration: "",
+        selected: false,
+        completed: false,
+        id: ""
     }
     addTask(event: React.FormEvent) {
         event.preventDefault()
-        this.props.setTask(taskList => [...taskList, this.state])
+        this.props.setTask(taskList => [...taskList, 
+            {
+                ...this.state,
+                seleted: false,
+                completed: false,
+                id: uuidv4()
+            }
+        ])
+        this.setState({
+            name: "",
+            duration: ""
+        })
     }
     render() {
         return (

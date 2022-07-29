@@ -1,8 +1,22 @@
-import style from '../List.module.scss'
+import { ITask } from '../../../types/ITask'
+import style from './Item.module.scss'
 
-export default function Item({name, duration}: { name: string, duration: string }) {
+interface Props extends ITask {
+    selectTask: (selectTask: ITask) => void
+}
+
+export default function Item({name, duration, selected, completed, id, selectTask } : Props) {
+    
     return (
-        <li className={style.item}>
+        <li className={ `${style.item} ${ selected ? style.itemSelecionado : '' }` } 
+            onClick={() => selectTask({
+                name, 
+                duration, 
+                selected, 
+                completed, 
+                id
+            })
+        }>
             <h3>
                 {name}
             </h3>
